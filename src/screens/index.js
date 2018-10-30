@@ -8,6 +8,9 @@ import MyPhotosScreen from "./MyPhotosScreen";
 import MyLikesScreen from "./MyLikesScreen";
 import MyCollectionsScreen from "./MyCollectionsScreen";
 import CameraScreen from "./CameraScreen";
+import SearchPhotosScreen from "./SearchPhotosScreen";
+import SearchCollectionsScreen from "./SearchCollectionsScreen";
+import SearchUsersScreen from "./SearchUsersScreen";
 
 export {
 	HomeScreen,
@@ -18,5 +21,8 @@ export {
 	MyPhotosScreen,
 	MyLikesScreen,
 	MyCollectionsScreen,
-	CameraScreen
+	CameraScreen,
+	SearchPhotosScreen,
+	SearchUsersScreen,
+	SearchCollectionsScreen
 };

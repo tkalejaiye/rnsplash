@@ -12,25 +12,27 @@ import ProfileNavigator from "./ProfileNavigator";
 // Screens
 import { CameraScreen } from "../screens";
 
+// Headers
+import SearchHeader from "../components/SearchHeader";
+
 const MainNavigator = createBottomTabNavigator(
   {
     HomeScreen: {
       screen: HomeNavigator,
       navigationOptions: {
-        header: null,
         title: "Home"
       }
     },
-    CameraTabScreen: {
-      screen: CameraScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: null,
-        tabBarIcon: <Ionicons name="md-camera" size={30} />,
-        tabBarOnPress: ({ navigation }) => {
-          navigation.navigate("CameraScreen");
-        }
-      })
-    },
+    // CameraTabScreen: {
+    //   screen: CameraScreen,
+    //   navigationOptions: ({ navigation }) => ({
+    //     header: null,
+    //     tabBarIcon: <Ionicons name="md-camera" size={30} />,
+    //     tabBarOnPress: ({ navigation }) => {
+    //       navigation.navigate("CameraScreen");
+    //     }
+    //   })
+    // },
     ProfileScreen: {
       screen: ProfileNavigator,
       navigationOptions: {
@@ -78,9 +80,7 @@ const CameraModalStack = createStackNavigator(
 const NavigationWrapper = createStackNavigator({
   Main: {
     screen: CameraModalStack,
-    navigationOptions: {
-      header: null
-    }
+    navigationOptions: {}
   }
 });
 
