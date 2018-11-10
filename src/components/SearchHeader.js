@@ -7,7 +7,7 @@ import {
 	TouchableOpacity
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { withNavigation } from "react-navigation";
+import { withNavigation, NavigationActions } from "react-navigation";
 
 class SearchHeader extends Component {
 	constructor(props) {
@@ -17,74 +17,73 @@ class SearchHeader extends Component {
 		};
 	}
 
+	componentDidMount() {
+		this.onFocus();
+	}
+
 	onFocus = () => {
-		this.setState(
-			{
-				isFocused: true
-			},
-			() => {
-				this.props.navigation.navigate("Search");
-			}
-		);
+		setTimeout(() => {
+			this.searchTextInput.focus();
+		}, 240);
 	};
 
 	goBack = () => {
-		this.setState({ isFocused: false }, () => {
-			this.props.navigation.goBack();
-		});
+		if (this.state.isFocused) {
+			this.setState({ isFocused: false }, () => {
+				this.props.navigation.goBack();
+			});
+		}
+	};
+
+	onPress = () => {
+		this.props.navigation.navigate("Home");
 	};
 
 	render() {
-		console.log(this.state.isFocused);
 		return (
 			<View>
-				{this.state.isFocused ? (
-					<View style={styles.container}>
-						<TouchableOpacity onPress={this.goBack}>
-							<Feather
-								name="arrow-left"
-								size={20}
-								color="black"
-							/>
-						</TouchableOpacity>
-						<TextInput
-							style={styles.textInput}
-							placeholder="Search"
-							onFocus={this.onFocus}
-							onBlur={this.onBlur}
-						/>
+				<View style={styles.container}>
+					<TouchableOpacity onPress={this.onPress}>
+						<Feather name="arrow-left" size={20} color="black" />
+					</TouchableOpacity>
+					<TextInput
+						style={styles.textInput}
+						placeholder="Search"
+						ref={input => {
+							this.searchTextInput = input;
+						}}
+						underlineColorAndroid="transparent"
+					/>
+					<TouchableOpacity>
 						<Feather name="filter" size={20} color="black" />
-					</View>
-				) : (
-					<View style={styles.container}>
-						<Feather name="search" size={20} color="black" />
-						<TextInput
-							style={styles.textInput}
-							placeholder="Search"
-							onFocus={this.onFocus}
-						/>
-						<Feather name="filter" size={20} color="black" />{" "}
-					</View>
-				)}
+					</TouchableOpacity>
+				</View>
 			</View>
 		);
 	}
 }
 
-export default withNavigation(SearchHeader);
+//export default withNavigation(SearchHeader);
+export default SearchHeader;
 
 const styles = StyleSheet.create({
 	container: {
-		marginTop: 20,
-		height: 45,
+		paddingTop: 30,
+		height: 60,
 		backgroundColor: "#fff",
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-around"
 	},
 	textInput: {
-		height: 40,
+		height: 30,
 		width: "80%",
-		marginVertical: 5
+		borderColor: "black"
+	},
+	fakeInput: {
+		height: 30,
+		width: "80%",
+		marginVertical: 5,
+		justifyContent: "center"
 	}
 });

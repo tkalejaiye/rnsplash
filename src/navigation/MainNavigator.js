@@ -18,21 +18,8 @@ import SearchHeader from "../components/SearchHeader";
 const MainNavigator = createBottomTabNavigator(
   {
     HomeScreen: {
-      screen: HomeNavigator,
-      navigationOptions: {
-        title: "Home"
-      }
+      screen: HomeNavigator
     },
-    // CameraTabScreen: {
-    //   screen: CameraScreen,
-    //   navigationOptions: ({ navigation }) => ({
-    //     header: null,
-    //     tabBarIcon: <Ionicons name="md-camera" size={30} />,
-    //     tabBarOnPress: ({ navigation }) => {
-    //       navigation.navigate("CameraScreen");
-    //     }
-    //   })
-    // },
     ProfileScreen: {
       screen: ProfileNavigator,
       navigationOptions: {
@@ -41,6 +28,7 @@ const MainNavigator = createBottomTabNavigator(
     }
   },
   {
+    mode: "modal",
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ tintColor }) => {
         const { routeName } = navigation.state;
@@ -62,26 +50,4 @@ const MainNavigator = createBottomTabNavigator(
   }
 );
 
-const CameraModalStack = createStackNavigator(
-  {
-    MainScreen: {
-      screen: MainNavigator
-    },
-    CameraScreen: {
-      screen: CameraScreen
-    }
-  },
-  {
-    mode: "modal",
-    headerMode: "none"
-  }
-);
-
-const NavigationWrapper = createStackNavigator({
-  Main: {
-    screen: CameraModalStack,
-    navigationOptions: {}
-  }
-});
-
-export default CameraModalStack;
+export default MainNavigator;

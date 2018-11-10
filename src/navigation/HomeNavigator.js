@@ -5,13 +5,19 @@ import {
 } from "react-navigation";
 
 // Screens
-import { NewScreen, FeaturedScreen, CollectionsScreen } from "../screens";
+import {
+  NewScreen,
+  FeaturedScreen,
+  CollectionsScreen,
+  SearchCollectionsScreen
+} from "../screens";
 
 // Headers
 import SearchHeader from "../components/SearchHeader";
+import MainHeader from "../components/MainHeader";
 
 // Navigators
-import SearchNavigator from "./SearchNavigator.js";
+import SearchNavigator from "./SearchNavigator";
 
 const HomeScreenNavigator = createMaterialTopTabNavigator(
   {
@@ -51,20 +57,28 @@ const HomeScreenNavigator = createMaterialTopTabNavigator(
   }
 );
 
-// Wrapping the navigator in a stack navigator to allow for the custom header(profile)
+const TestWrapper = createStackNavigator({
+  Main: {
+    screen: HomeScreenNavigator,
+    navigationOptions: ({ navigation }) => ({
+      header: <MainHeader navigation={navigation} />
+    })
+  }
+});
+
+// Wrapping the navigator in a stack navigator to allow for the custom header
 const HomeScreenNavigationWrapper = createStackNavigator(
   {
-    Main: {
-      screen: HomeScreenNavigator
+    Home: {
+      screen: TestWrapper
     },
     Search: {
       screen: SearchNavigator
     }
   },
   {
-    navigationOptions: {
-      header: <SearchHeader />
-    }
+    mode: "modal",
+    headerMode: "none"
   }
 );
 
