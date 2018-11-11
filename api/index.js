@@ -53,3 +53,55 @@ export const getCollections = () => {
 			return collections;
 		});
 };
+
+export const searchPhotos = query => {
+	return unsplash.search
+		.photos(query, 1)
+		.then(toJson)
+		.then(json => {
+			let photos = [];
+			json.results.forEach(picture => {
+				photos.push(picture);
+			});
+			return photos;
+		});
+};
+
+export const searchUsers = query => {
+	return unsplash.search
+		.users(query, 1)
+		.then(toJson)
+		.then(json => {
+			let users = [];
+			json.results.forEach(user => {
+				users.push(user);
+			});
+			return users;
+		});
+};
+
+export const searchCollections = query => {
+	return unsplash.search
+		.collections(query, 1)
+		.then(toJson)
+		.then(json => {
+			let collections = [];
+			json.results.forEach(collection => {
+				collections.push(collection);
+			});
+			return collections;
+		});
+};
+
+export const search = query => {
+	let completeSearch = {};
+	return searchPhotos(query)
+		.then(photos => (completeSearch["photos"] = photos))
+		.then(() => searchUsers(query))
+		.then(users => (completeSearch["users"] = users))
+		.then(() => searchCollections(query))
+		.then(collections => (completeSearch["collections"] = collections))
+		.then(() => {
+			return completeSearch;
+		});
+};

@@ -6,14 +6,38 @@ import {
 	TouchableOpacity,
 	ActivityIndicator,
 	Image,
-	FlatList
+	FlatList,
+	Dimensions
 } from "react-native";
+import { withNavigation } from "react-navigation";
+import AsyncImage from "../components/AsyncImage";
 
-const PhotoList = ({ photos, renderPhoto }) => (
+const { width, height } = Dimensions.get("window");
+
+const PhotoList = ({ photos, renderPhoto, navigation }) => (
 	<View>
 		<FlatList
 			data={photos}
-			renderItem={renderPhoto}
+			renderItem={photo => (
+				<View>
+					<TouchableOpacity
+						onPress={() =>
+							navigation.navigate("ViewPhoto", {
+								photo: photo
+							})
+						}
+					>
+						<AsyncImage
+							style={{
+								width: width,
+								height: Math.floor(Math.random() * 300) + 200
+							}}
+							source={photo.item.urls.regular}
+							color={photo.item.color}
+						/>
+					</TouchableOpacity>
+				</View>
+			)}
 			keyExtractor={(photo, index) => index.toString()}
 		/>
 	</View>

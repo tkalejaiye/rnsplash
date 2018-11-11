@@ -37,23 +37,24 @@ export default class FeaturedScreen extends Component {
 		});
 	}
 
-	renderPhoto(photo) {
-		return (
-			<View>
-				<AsyncImage
-					style={{
-						width: width,
-						height: Math.floor(Math.random() * 300) + 200
-					}}
-					source={photo.item.urls.regular}
-					color={photo.item.color}
-				/>
-			</View>
-		);
-	}
+	// renderPhoto(photo) {
+	// 	return (
+	// 		<View>
+	// 			<AsyncImage
+	// 				style={{
+	// 					width: width,
+	// 					height: Math.floor(Math.random() * 300) + 200
+	// 				}}
+	// 				source={photo.item.urls.regular}
+	// 				color={photo.item.color}
+	// 			/>
+	// 		</View>
+	// 	);
+	// }
 
 	render() {
 		const { isLoading, err, photos } = this.state;
+		const { navigation } = this.props;
 		return (
 			<View style={styles.container}>
 				{isLoading ? (
@@ -71,6 +72,7 @@ export default class FeaturedScreen extends Component {
 						<PhotoList
 							photos={photos}
 							renderPhoto={this.renderPhoto}
+							navigation={navigation}
 						/>
 					</View>
 				)}

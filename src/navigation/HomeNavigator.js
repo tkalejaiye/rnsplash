@@ -9,7 +9,8 @@ import {
   NewScreen,
   FeaturedScreen,
   CollectionsScreen,
-  SearchCollectionsScreen
+  SearchCollectionsScreen,
+  ViewPhotoScreen
 } from "../screens";
 
 // Headers
@@ -63,6 +64,9 @@ const TestWrapper = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       header: <MainHeader navigation={navigation} />
     })
+  },
+  ViewPhoto: {
+    screen: ViewPhotoScreen
   }
 });
 
@@ -70,15 +74,21 @@ const TestWrapper = createStackNavigator({
 const HomeScreenNavigationWrapper = createStackNavigator(
   {
     Home: {
-      screen: TestWrapper
+      screen: TestWrapper,
+      navigationOptions: {
+        header: null
+      }
     },
     Search: {
-      screen: SearchNavigator
+      screen: SearchNavigator,
+      navigationOptions: {
+        header: null
+      }
     }
   },
   {
-    mode: "modal",
-    headerMode: "none"
+    mode: "modal"
+    //headerMode: "none"
   }
 );
 

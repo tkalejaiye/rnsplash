@@ -6,12 +6,12 @@ import {
 	TouchableOpacity,
 	ActivityIndicator,
 	Image,
-	Dimensions
+	Dimensions,
+	AsyncStorage
 } from "react-native";
 import { getNewPhotos } from "../../api/index";
 
 import PhotoList from "../components/PhotoList";
-import AsyncImage from "../components/AsyncImage";
 
 export default class NewScreen extends Component {
 	constructor(props) {
@@ -37,23 +37,26 @@ export default class NewScreen extends Component {
 		});
 	}
 
-	renderPhoto(photo) {
-		return (
-			<View>
-				<AsyncImage
-					style={{
-						width: width,
-						height: Math.floor(Math.random() * 300) + 200
-					}}
-					source={photo.item.urls.regular}
-					color={photo.item.color}
-				/>
-			</View>
-		);
-	}
+	// renderPhoto(photo) {
+	// 	return (
+	// 		<View>
+	// 			<TouchableOpacity>
+	// 				<AsyncImage
+	// 					style={{
+	// 						width: width,
+	// 						height: Math.floor(Math.random() * 300) + 200
+	// 					}}
+	// 					source={photo.item.urls.regular}
+	// 					color={photo.item.color}
+	// 				/>
+	// 			</TouchableOpacity>
+	// 		</View>
+	// 	);
+	// }
 
 	render() {
 		const { isLoading, err, photos } = this.state;
+		const { navigation } = this.props;
 		return (
 			<View style={styles.container}>
 				{isLoading ? (
@@ -70,8 +73,9 @@ export default class NewScreen extends Component {
 					>
 						<PhotoList
 							photos={photos}
-							renderPhoto={this.renderPhoto}
+							//renderPhoto={this.renderPhoto}
 							isCollection={false}
+							navigation={navigation}
 						/>
 					</View>
 				)}

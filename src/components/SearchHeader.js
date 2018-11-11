@@ -4,21 +4,28 @@ import {
 	Text,
 	View,
 	TextInput,
-	TouchableOpacity
+	TouchableOpacity,
+	AsyncStorage
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { withNavigation, NavigationActions } from "react-navigation";
+import { search } from "../../api/";
 
 class SearchHeader extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isFocused: false
+			isFocused: false,
+			photos: [],
+			users: [],
+			collections: [],
+			searchQuery: ""
 		};
 	}
 
 	componentDidMount() {
 		this.onFocus();
+		this.clearSearchHistory();
 	}
 
 	onFocus = () => {
@@ -39,6 +46,24 @@ class SearchHeader extends Component {
 		this.props.navigation.navigate("Home");
 	};
 
+	onSubmit = () => {
+		const { searchQuery } = this.state;
+		search(searchQuery).then(searchResults => {
+			// AsyncStorage.multiSet([
+			// 	["photos", JSON.stringify(searchResults.photos)],
+			// 	["users", JSON.stringify(searchResults.users)],
+			// 	["collections", JSON.stringify(searchResults.collections)]
+			// ]);
+			this.props.navigation.state.setParam({
+				photos: searchResults.photos
+			});
+		});
+	};
+
+	async clearSearchHistory() {
+		await AsyncStorage.multiRemove(["photos", "collections", "users"]);
+	}
+
 	render() {
 		return (
 			<View>
@@ -53,6 +78,10 @@ class SearchHeader extends Component {
 							this.searchTextInput = input;
 						}}
 						underlineColorAndroid="transparent"
+						onChangeText={text =>
+							this.setState({ searchQuery: text })
+						}
+						onSubmitEditing={this.onSubmit}
 					/>
 					<TouchableOpacity>
 						<Feather name="filter" size={20} color="black" />

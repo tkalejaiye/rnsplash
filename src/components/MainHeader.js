@@ -14,7 +14,7 @@ export default class MainHeader extends Component {
 	}
 
 	onPress = () => {
-		this.props.navigation.navigate("Search");
+		this.props.navigation.navigate("Search", { isWorking: "yes, it is" });
 	};
 
 	render() {
