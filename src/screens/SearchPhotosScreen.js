@@ -14,7 +14,9 @@ import { search, searchPhotos } from "../../api/index";
 import PhotoList from "../components/PhotoList";
 import AsyncImage from "../components/AsyncImage";
 
-export default class SearchPhotosScreen extends Component {
+import { connect } from "react-redux";
+
+class SearchPhotosScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -23,34 +25,7 @@ export default class SearchPhotosScreen extends Component {
 			error: ""
 		};
 	}
-	componentDidMount() {
-		this.setState({ isLoading: true });
-		// this.setState({ isLoading: true }, () => {
-		// 	AsyncStorage.getItem("photos").then(photos => {
-		// 		this.setState({ isLoading: false, photos: JSON.parse(photos) });
-		// 	});
-		// });
-		// this.setState({ isLoading: true }, () =>
-		// 	AsyncStorage.getItem("photos").then(photos => {
-		// 		this.setState(
-		// 			{ isLoading: false, photos: JSON.parse(photos) },
-		// 			() => AsyncStorage.removeItem("photos")
-		// 		);
-		// 	})
-		// );
-		//this.getPhotos().then(results => this.updateState(results));
-	}
-
-	// updateState(results) {
-	// 	this.setState(prevState => {
-	// 		return { ...prevState, photos: JSON.parse(results) };
-	// 	});
-	// }
-
-	async getPhotos() {
-		const photos = await AsyncStorage.getItem("photos");
-		return photos;
-	}
+	componentDidMount() {}
 
 	renderPhoto(photo) {
 		return (
@@ -68,11 +43,12 @@ export default class SearchPhotosScreen extends Component {
 	}
 
 	render() {
-		const { isLoading, err, photos } = this.state;
+		const { isLoading, err } = this.state;
+		const { photos } = this.props;
 		return (
 			<View style={styles.container}>
-				{/*isLoading ? (
-					<ActivityIndicator />
+				{photos.length === 0 ? (
+					<Text>No Results</Text>
 				) : err ? (
 					<Text>{err}</Text>
 				) : (
@@ -89,12 +65,17 @@ export default class SearchPhotosScreen extends Component {
 							isCollection={false}
 						/>
 					</View>
-				)*/}
-				<Text>Search Photos Screen</Text>
+				)}
 			</View>
 		);
 	}
 }
+
+function mapStateToProps(state) {
+	return { photos: state.searchResults.photos };
+}
+
+export default connect(mapStateToProps)(SearchPhotosScreen);
 
 const { width, height } = Dimensions.get("window");
 const styles = StyleSheet.create({

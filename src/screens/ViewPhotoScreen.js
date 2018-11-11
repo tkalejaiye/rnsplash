@@ -21,7 +21,7 @@ export default class ViewPhotoScreen extends Component {
 				<AsyncImage
 					style={{
 						width: width,
-						height: Math.floor(Math.random() * 300) + 200
+						height: 500
 					}}
 					source={
 						this.props.navigation.state.params.photo.item.urls

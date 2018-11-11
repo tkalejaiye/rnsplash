@@ -10,6 +10,8 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { withNavigation, NavigationActions } from "react-navigation";
 import { search } from "../../api/";
+import { connect } from "react-redux";
+import * as actions from "../actions";
 
 class SearchHeader extends Component {
 	constructor(props) {
@@ -25,7 +27,6 @@ class SearchHeader extends Component {
 
 	componentDidMount() {
 		this.onFocus();
-		this.clearSearchHistory();
 	}
 
 	onFocus = () => {
@@ -48,21 +49,8 @@ class SearchHeader extends Component {
 
 	onSubmit = () => {
 		const { searchQuery } = this.state;
-		search(searchQuery).then(searchResults => {
-			// AsyncStorage.multiSet([
-			// 	["photos", JSON.stringify(searchResults.photos)],
-			// 	["users", JSON.stringify(searchResults.users)],
-			// 	["collections", JSON.stringify(searchResults.collections)]
-			// ]);
-			this.props.navigation.state.setParam({
-				photos: searchResults.photos
-			});
-		});
+		this.props.getSearch(searchQuery);
 	};
-
-	async clearSearchHistory() {
-		await AsyncStorage.multiRemove(["photos", "collections", "users"]);
-	}
 
 	render() {
 		return (
@@ -93,7 +81,7 @@ class SearchHeader extends Component {
 }
 
 //export default withNavigation(SearchHeader);
-export default SearchHeader;
+export default connect(null, actions)(SearchHeader);
 
 const styles = StyleSheet.create({
 	container: {
