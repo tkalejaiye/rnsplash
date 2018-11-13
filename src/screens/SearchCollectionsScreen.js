@@ -95,5 +95,18 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center"
+	},
+	collectionFooter: { margin: 10 },
+	collectionTitle: {
+		fontSize: 14,
+		fontWeight: "500"
+	},
+	collectionStats: {
+		flexDirection: "row"
+	},
+	collectionStatsText: {
+		fontSize: 12,
+		color: "#a9a9a9",
+		marginRight: 5
 	}
 });

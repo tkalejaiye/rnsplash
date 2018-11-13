@@ -33,9 +33,10 @@ const INITIAL_STATE = {
 };
 
 const logger = store => next => action => {
-	console.log("dispatching", action);
+	console.log("Dispatching", action);
+	console.log("Old state", store.getState());
 	let result = next(action);
-	console.log("next state", store.getState());
+	console.log("New state", store.getState());
 	return result;
 };
 

@@ -24,7 +24,7 @@ export const getSearch = query => async dispatch => {
 export const getPhotos = query => async dispatch => {
 	try {
 		const searchResults = await searchPhotos(query);
-		dispatch({ type: SEARCH_PHOTOS, payload: searchResults });
+		dispatch({ type: SEARCH_PHOTOS, payload: photos });
 	} catch (e) {
 		dispatch({ type: SEARCH_ERROR, payload: "Search Error :/" });
 	}
@@ -33,7 +33,7 @@ export const getPhotos = query => async dispatch => {
 export const getUsers = query => async dispatch => {
 	try {
 		const searchResults = await searchUsers(query);
-		dispatch({ type: SEARCH_USERS, payload: searchResults });
+		dispatch({ type: SEARCH_USERS, payload: users });
 	} catch (e) {
 		dispatch({ type: SEARCH_ERROR, payload: "Search Error :/" });
 	}
@@ -42,7 +42,7 @@ export const getUsers = query => async dispatch => {
 export const getCollections = query => async dispatch => {
 	try {
 		const searchResults = await searchCollections(query);
-		dispatch({ type: SEARCH_COLLECTIONS, payload: searchResults });
+		dispatch({ type: SEARCH_COLLECTIONS, payload: collections });
 	} catch (e) {
 		dispatch({ type: SEARCH_ERROR, payload: "Search Error :/" });
 	}
