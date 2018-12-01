@@ -8,7 +8,9 @@ import {
 import {
 	SearchPhotosScreen,
 	SearchUsersScreen,
-	SearchCollectionsScreen
+	SearchCollectionsScreen,
+	ViewPhotoScreen,
+	ViewCollectionScreen
 } from "../screens";
 
 import SearchHeader from "../components/SearchHeader";
@@ -54,14 +56,13 @@ const SearchPageNavigator = createMaterialTopTabNavigator(
 const SearchPageNavigatorWrapper = createStackNavigator(
 	{
 		Search: {
-			screen: SearchPageNavigator
+			screen: SearchPageNavigator,
+			navigationOptions: ({ navigation }) => ({
+				header: <SearchHeader navigation={navigation} />
+			})
 		}
 	},
-	{
-		navigationOptions: ({ navigation }) => ({
-			header: <SearchHeader navigation={navigation} />
-		})
-	}
+	{}
 );
 
 export default SearchPageNavigatorWrapper;

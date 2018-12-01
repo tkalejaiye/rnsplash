@@ -22,14 +22,20 @@ import {
 import ProfileHeader from "./src/components/ProfileHeader";
 import MainHeader from "./src/components/MainHeader";
 
-import searchReducer from "./src/reducers/searchReducer";
+// Redux
+import reducer from "./src/reducers/reducer";
+import { fetchAll } from "./src/actions";
 
 const INITIAL_STATE = {
 	searchResults: {
 		photos: [],
 		users: [],
 		collections: []
-	}
+	},
+	collectionPhotos: [],
+	newPhotos: [],
+	featuredPhotos: [],
+	collections: []
 };
 
 const logger = store => next => action => {
@@ -41,10 +47,11 @@ const logger = store => next => action => {
 };
 
 const store = createStore(
-	searchReducer,
+	reducer,
 	INITIAL_STATE,
-	applyMiddleware(logger, thunk)
+	applyMiddleware(thunk, logger)
 );
+store.dispatch(fetchAll());
 
 export default class App extends Component {
 	render() {

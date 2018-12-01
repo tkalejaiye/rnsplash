@@ -105,3 +105,29 @@ export const search = query => {
 			return completeSearch;
 		});
 };
+
+export const getCollectionPhotos = (id, page, photosPerPage, orderBy) => {
+	return unsplash.collections
+		.getCollectionPhotos(id, page, photosPerPage, orderBy)
+		.then(toJson)
+		.then(json => {
+			let photos = [];
+			json.forEach(photo => {
+				photos.push(photo);
+			});
+			return photos;
+		});
+};
+
+export const onLoad = () => {
+	let loadedResults = {};
+	return getNewPhotos()
+		.then(newPhotos => (loadedResults["photos"] = newPhotos))
+		.then(() => getFeaturedPhotos())
+		.then(featuredPhotos => (loadedResults["featured"] = featuredPhotos))
+		.then(() => getCollections())
+		.then(collections => (loadedResults["collections"] = collections))
+		.then(() => {
+			return loadedResults;
+		});
+};

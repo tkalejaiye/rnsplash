@@ -10,7 +10,8 @@ import {
   FeaturedScreen,
   CollectionsScreen,
   SearchCollectionsScreen,
-  ViewPhotoScreen
+  ViewPhotoScreen,
+  ViewCollectionScreen
 } from "../screens";
 
 // Headers
@@ -64,9 +65,6 @@ const TestWrapper = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       header: <MainHeader navigation={navigation} />
     })
-  },
-  ViewPhoto: {
-    screen: ViewPhotoScreen
   }
 });
 

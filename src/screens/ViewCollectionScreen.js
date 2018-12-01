@@ -1,31 +1,30 @@
 import React, { Component } from "react";
-import {
-	StyleSheet,
-	View,
-	Text,
-	TouchableOpacity,
-	ActivityIndicator,
-	Image,
-	Dimensions,
-	AsyncStorage
-} from "react-native";
-import { search, searchPhotos } from "../../api/index";
+import { StyleSheet, View, Text, Dimensions } from "react-native";
 
 import PhotoList from "../components/PhotoList";
 import AsyncImage from "../components/AsyncImage";
 
 import { connect } from "react-redux";
+import * as actions from "../actions";
 
-class SearchPhotosScreen extends Component {
+class ViewCollectionScreen extends Component {
+	static navigationOptions = ({ navigation }) => {
+		return {
+			title: navigation.getParam("title")
+		};
+	};
+
 	constructor(props) {
 		super(props);
 		this.state = {
-			photos: [],
-			isLoading: false,
-			error: ""
+			photos: []
 		};
 	}
-	componentDidMount() {}
+
+	componentDidMount() {
+		const { id } = this.props.navigation.state.params.collection.item;
+		this.props.getCollection(id, 1, 10, "latest");
+	}
 
 	renderPhoto(photo) {
 		return (
@@ -43,14 +42,11 @@ class SearchPhotosScreen extends Component {
 	}
 
 	render() {
-		const { isLoading, err } = this.state;
 		const { photos, navigation } = this.props;
 		return (
 			<View style={styles.container}>
 				{photos.length === 0 ? (
 					<Text>No Results</Text>
-				) : err ? (
-					<Text>{err}</Text>
 				) : (
 					<View
 						style={{
@@ -72,12 +68,13 @@ class SearchPhotosScreen extends Component {
 }
 
 function mapStateToProps(state) {
-	return { photos: state.searchResults.photos };
+	return { photos: state.collectionPhotos };
 }
 
-export default connect(mapStateToProps)(SearchPhotosScreen);
+export default connect(mapStateToProps, actions)(ViewCollectionScreen);
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,

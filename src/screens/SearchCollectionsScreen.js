@@ -30,31 +30,37 @@ class SearchCollectionsScreen extends Component {
 	renderCollectionCoverPhoto(collection) {
 		return (
 			<View>
-				<AsyncImage
-					style={{ width: width, height: 200 }}
-					source={collection.item.cover_photo.urls.regular}
-					color={collection.item.cover_photo.color}
-				/>
-				<View style={styles.collectionFooter}>
-					<Text style={styles.collectionTitle}>
-						{collection.item.title}
-					</Text>
-					<View style={styles.collectionStats}>
-						<Text style={styles.collectionStatsText}>
-							{collection.item.total_photos} Photos
+				<TouchableOpacity
+					onPress={() =>
+						navigation.navigate("ViewCollection", { collection })
+					}
+				>
+					<AsyncImage
+						style={{ width: width, height: 200 }}
+						source={collection.item.cover_photo.urls.regular}
+						color={collection.item.cover_photo.color}
+					/>
+					<View style={styles.collectionFooter}>
+						<Text style={styles.collectionTitle}>
+							{collection.item.title}
 						</Text>
-						<Text style={styles.collectionStatsText}>
-							Curated by {collection.item.user.name}
-						</Text>
+						<View style={styles.collectionStats}>
+							<Text style={styles.collectionStatsText}>
+								{collection.item.total_photos} Photos
+							</Text>
+							<Text style={styles.collectionStatsText}>
+								Curated by {collection.item.user.name}
+							</Text>
+						</View>
 					</View>
-				</View>
+				</TouchableOpacity>
 			</View>
 		);
 	}
 
 	render() {
 		const { isLoading, err } = this.state;
-		const { collections } = this.props;
+		const { collections, navigation } = this.props;
 		return (
 			<View style={styles.container}>
 				{collections.length === 0 ? (
@@ -74,6 +80,7 @@ class SearchCollectionsScreen extends Component {
 							renderCollectionCoverPhoto={
 								this.renderCollectionCoverPhoto
 							}
+							navigation={navigation}
 						/>
 					</View>
 				)}

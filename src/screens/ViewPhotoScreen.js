@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Dimensions } from "react-native";
 import AsyncImage from "../components/AsyncImage";
+import moment from 'moment';
 
 export default class ViewPhotoScreen extends Component {
-	// static navigationOptions = ({ navigation }) => {
-	// 	const { params } = navigation.state;
-	// 	return { this.setState };
-	// };
 
 	constructor(props) {
 		super(props);
@@ -16,31 +13,41 @@ export default class ViewPhotoScreen extends Component {
 	}
 
 	render() {
+		const { photo } = this.props.navigation.state.params;
 		return (
 			<View style={styles.container}>
 				<AsyncImage
-					style={{
-						width: width,
-						height: 500
-					}}
-					source={
-						this.props.navigation.state.params.photo.item.urls
-							.regular
-					}
-					color={this.props.navigation.state.params.photo.item.color}
+					style={styles.image}
+					source={photo.item.urls.regular}
+					color={photo.item.color}
 				/>
+				<View style={styles.photoInfo}>
+					<Text>By {photo.item.user.name}</Text>
+					<Text>{moment(photo.item.created_at).format("MMM Do YYYY")}</Text>
+					<Text>{photo.item.likes} Likes</Text>
+				</View>
 			</View>
 		);
 	}
 }
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#fff",
-		alignItems: "center",
 		justifyContent: "center"
+	},
+	image: {
+		width: width,
+		height: height - 250,
+		flex: 3
+	},
+	photoInfo: {
+		flex: 1,
+		height: 250,
+		justifyContent: "space-around",
+		marginLeft: 25
 	}
 });

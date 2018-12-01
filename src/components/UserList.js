@@ -53,9 +53,16 @@ const styles = StyleSheet.create({
 	userInfo: {
 		justifyContent: "space-around"
 	},
+	username: {
+
+	},
+	name: {
+		color: "#c9c9c9"
+	},
 	profilePicture: {
 		height: 50,
 		width: 50,
-		borderRadius: 25
+		borderRadius: 25,
+		marginHorizontal: 10
 	}
 });

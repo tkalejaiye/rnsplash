@@ -13,7 +13,10 @@ import { getNewPhotos } from "../../api/index";
 
 import PhotoList from "../components/PhotoList";
 
-export default class NewScreen extends Component {
+import { connect } from "react-redux";
+import * as actions from "../actions";
+
+class NewScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -22,44 +25,13 @@ export default class NewScreen extends Component {
 			error: ""
 		};
 	}
-	componentDidMount() {
-		this.setState({ isLoading: true }, () => {
-			getNewPhotos()
-				.then(photos => {
-					this.setState({ photos, isLoading: false });
-				})
-				.catch(err =>
-					this.setState({
-						isLoading: false,
-						err: "Network Request Failed"
-					})
-				);
-		});
-	}
-
-	// renderPhoto(photo) {
-	// 	return (
-	// 		<View>
-	// 			<TouchableOpacity>
-	// 				<AsyncImage
-	// 					style={{
-	// 						width: width,
-	// 						height: Math.floor(Math.random() * 300) + 200
-	// 					}}
-	// 					source={photo.item.urls.regular}
-	// 					color={photo.item.color}
-	// 				/>
-	// 			</TouchableOpacity>
-	// 		</View>
-	// 	);
-	// }
 
 	render() {
-		const { isLoading, err, photos } = this.state;
-		const { navigation } = this.props;
+		const { isLoading, err } = this.state;
+		const { navigation, photos } = this.props;
 		return (
 			<View style={styles.container}>
-				{isLoading ? (
+				{photos.length === 0 ? (
 					<ActivityIndicator />
 				) : err ? (
 					<Text>{err}</Text>
@@ -73,7 +45,6 @@ export default class NewScreen extends Component {
 					>
 						<PhotoList
 							photos={photos}
-							//renderPhoto={this.renderPhoto}
 							isCollection={false}
 							navigation={navigation}
 						/>
@@ -83,6 +54,14 @@ export default class NewScreen extends Component {
 		);
 	}
 }
+
+mapStateToProps = state => {
+	return {
+		photos: state.newPhotos
+	};
+};
+
+export default connect(mapStateToProps, actions)(NewScreen);
 
 const { width, height } = Dimensions.get("window");
 const styles = StyleSheet.create({

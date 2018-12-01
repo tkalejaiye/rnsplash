@@ -12,6 +12,7 @@ import SearchPhotosScreen from "./SearchPhotosScreen";
 import SearchCollectionsScreen from "./SearchCollectionsScreen";
 import SearchUsersScreen from "./SearchUsersScreen";
 import ViewPhotoScreen from "./ViewPhotoScreen";
+import ViewCollectionScreen from "./ViewCollectionScreen";
 
 export {
 	HomeScreen,
@@ -26,5 +27,6 @@ export {
 	SearchPhotosScreen,
 	SearchUsersScreen,
 	SearchCollectionsScreen,
-	ViewPhotoScreen
+	ViewPhotoScreen,
+	ViewCollectionScreen
 };
