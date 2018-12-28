@@ -1,4 +1,6 @@
-# rnsplash
-### React Native Unsplash App
+# RNSplash
+An unofficial Unsplash client app written in React Native. This project was bootstrapped using the Expo XDE
 
-I decided to try and redo the native Android Resplash app as a React Native app.
+
+
+
