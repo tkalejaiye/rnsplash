@@ -3,6 +3,10 @@ An unofficial Unsplash client app written in React Native. This project was boot
 
 ## Features
 
+## Prerequisites
 
+## Getting started
+
+## Screenshots
 
 
